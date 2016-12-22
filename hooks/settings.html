@@ -1,0 +1,191 @@
+<ion-list id="hooks_settings" ng-controller="hooksController" style="min-height: 100vh;">
+
+	<style>
+		
+		#hooks_settings .select2-container-multi .select2-choices li {
+			float: none;
+			margin: 5px;
+		}
+		
+		#hooks_settings .select2-container-multi .select2-choices li input {
+			width: 100% !important;
+			background-color: #f2f2f2 !important;
+			border: 1px #ccc dashed !important;
+		}
+		
+		#hooks_settings .even {
+			background-color: #f2f2f2;
+		}
+		
+		#hooks_settings .item {
+			margin: auto;
+		}
+		
+	</style>
+
+	<input type="hidden" value="{{settings = applets.configuring.settings}}" />
+		
+	<div class="item item-divider" style="background-color: #336699; border: none;">
+		<button class="button-clear" ng-click="!settings.hooks ? settings.hooks = {} : null; settings.hooks[now()] = {
+			new: true,
+			title: 'HOOK TITLE',
+			value: ['https://www.google.com/search?', 'q=', 'call.firstName', '%20', 'call.lastName'],
+			method: 'GET',
+			target: '_link',
+			callState: 'Alerting'
+		};" style="padding: 0; color: #ffffff;">
+			<i class="ion-plus-circled"></i>
+			<span>Create a Hook</span>
+		</button>
+	</div>
+	
+	<input type="hidden" value="{{count = Object.keys(settings.hooks).length || 0;}}" />
+	
+	<div ng-if="!count" class="item">		
+		<p>No hooks have been created.</p>		
+	</div>
+	
+	<div ng-repeat="(key, hook) in settings.hooks" ng-class-odd="'odd'" ng-class-even="'even'">
+		
+		<div class="row row-center" style="height: 100%; word-break: break-all;">
+			
+			<div class="col" style="padding: 10px; position: relative;">
+				
+				<div ng-if="hook.new" style="color: #4caf50;">
+					<i class="ion-alert-circled"></i>
+					<b>NEW!</b>
+				</div>
+		
+				<p>
+					<a href="#" editable-text="hook.title">
+						<b>{{hook.title || 'Hook Title'}}</b>
+					</a>
+					<a href ng-click="list.delete(true, settings.hooks, key);" style="color: #e63e3b;">&nbsp;&bull; Remove</a>
+				</p>
+								
+				<p style="line-height: 30px;">
+					
+					<span>Make a</span>
+					
+					<select ng-model="hook.method">
+						<option value="GET">GET</option>
+					</select>
+					
+					<span>request</span>
+					
+					<span ng-if="hook.method == 'GET' || hook.method == 'BOTH'">
+						<span>and create a</span>
+						<select ng-model="hook.target">
+							<option value="_link">link</option>
+							<option value="_tab">tab</option>
+							<option value="_pop">screen pop</option>
+						</select>
+					</span>
+					
+					<span>when call is</span>
+					
+				   <select ng-model="hook.callState" ng-disabled="hook.edit">
+				      <option value="Alerting">alerting</option>
+				      <option value="Active">active</option>
+				      <option value="Released">released</option>
+				   </select><span>.</span>
+					
+				</p>
+				
+				<p ng-if="hook.value.length" style="margin-top: 5px;">
+					
+					<a ng-href="{{sample(hook.value, settings.callState)}}" target="_blank">{{sample(hook.value, settings.callState)}}</a>
+					
+				</p>
+				
+				<div ng-if="hook.edit">
+				
+					<p ng-if="hook.value.length" style="font-size: 10px; color: #585858;">
+						<span style="display: inline-block; vertical-align: middle;">* Double-click the</span>
+						<span class="select2-search-choice-close" style="display: inline-block; position: relative; width: 18px; height: 12px;"></span>
+						<span style="display: inline-block; vertical-align: middle;">to remove a tag.</span>
+					</p>
+					
+					<input
+						type="hidden"
+						ui-select2="{
+							'multiple': true,
+							'simple_tags': true,
+							'tags': makeTokens(hook.callState)
+						}"
+						ng-model="hook.value"
+						style="width: 100%; display: block;"
+					>
+					
+				</div>
+
+			</div>
+			
+			<div class="col col-20" style="text-align: right;">
+
+				<button ng-if="!hook.edit" class="button button-calm" ng-click="edit(hook);">
+					<i class="ion-edit"></i>
+				</button>
+
+				<button ng-if="hook.edit" class="button button-balanced" ng-click="edit(hook);">
+					<i class="ion-checkmark"></i>
+				</button>
+				
+			</div>
+			
+		</div>
+
+	</div>
+	
+	<div ng-if="count > 3" class="item item-divider" style="background-color: #336699; border: none;">
+		<button class="button-clear" ng-click="!settings.hooks ? settings.hooks = {} : null; settings.hooks[now()] = {
+			new: true,
+			title: 'HOOK TITLE',
+			value: ['https://www.google.com/search?', 'q=', 'call.firstName', '%20', 'call.lastName'],
+			method: 'GET',
+			target: '_link'
+		};" style="padding: 0; color: #ffffff;">
+			<i class="ion-plus-circled"></i>
+			<span>Create a Hook</span>
+		</button>
+	</div>
+	
+	<div class="item item-divider">
+		<div class="row row-center" style="padding: 0;">
+			
+			<div class="col" style="padding: 0;">
+				<span class="hideOverflow no-touch" style="max-width: 100%;">Pre-made</span>
+			</div>
+			
+		</div>
+	</div>
+	
+	<div ng-repeat="(key, hook) in dummies" style="background-color: #ddd; word-break: break-all;">
+		
+		<div class="row row-center" style="height: 100%; border-bottom: 1px solid #cccccc;">
+
+			<div class="col" style="padding: 10px; position: relative;">
+			
+				<p>
+					<a>
+						<b>{{hook.title || 'Hook Title'}}</b>
+					</a>
+				</p>
+				
+				<a ng-href="{{sample(hook.value, settings.callState)}}" target="_blank">{{hook.value.join('')}}</a>
+								
+			</div>
+			
+			<div class="col col-20" style="text-align: right;">
+
+				<button class="button button-royal" ng-click="!settings.hooks ? settings.hooks = {} : null; settings.hooks[now()] = angular.copy(hook);">
+					<i class="ion-plus-circled"></i>
+				</button>
+				
+			</div>
+			
+		</div>
+		
+	</div>
+
+</ion-list>

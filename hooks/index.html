@@ -1,0 +1,105 @@
+<ion-view view-title="Hooks" ng-controller="hooksController">
+
+    <input type="hidden" value="{{loaded()}}" />
+	<input type="hidden" value="{{settings = session.applets['YXBwbGV0Omhvb2tz'];}}" />
+
+	<ion-nav-buttons side="right">
+	
+		<button class="button button-icon button-clear ion-gear-a" ng-click="applets.details('YXBwbGV0Omhvb2tz');"></button>
+		
+    </ion-nav-buttons>
+	
+    <ion-content>
+		
+		<ion-list>
+		
+			<ion-item class="item item-divider" style="height: 80px;">
+				<div class="row row-center" style="height: 100%; padding: 0;">
+					
+					<div class="col col-80" style="padding: 0;">
+						<div ng-if="!current.callId">Make or receive a call!</div>
+						<div ng-if="current.callId">
+							<span>{{current.call.call.remoteParty.name || current.call.call.formatedAddress}}</span>
+							<span>({{current.call.call.state}})</span>
+						</div>
+					</div>
+					
+					<div class="col" style="text-align: right">
+						<a
+							class="button"
+							style="font-size: 22px; margin: auto; padding: 0; width: 52px; height: 52px; border-radius: 100%;"
+							ng-class="{
+								'button-energized': !call.dummy && current.call.call.state == 'Alerting',
+								'button-balanced': !call.dummy && current.call.call.state == 'Released',
+								'button-assertive': !call.dummy && current.call.call.state == 'Active',
+								'button-dark': !call.dummy && current.call.call.state == 'Detached'
+							}"
+							ng-click="notify({
+								type: 'info',
+								title: current.call.call.state ? current.call.call.state : 'No Call State',
+								memo: 'This is the &#34;Call State&#34; of your current or last call. Hooks that match this &#34;Call State&#34; will light up.'	
+							});"
+						>
+							<div class="row row-center" style="height: 100%;">
+								<div class="col">
+									<i class="ion-information-circled"></i>
+								</div>
+							</div>
+						</a>
+					</div>
+					
+				</div>
+			</ion-item>
+			
+			<input type="hidden" value="{{hooks = Object.keys(settings.hooks).length ? settings.hooks : default}}" />
+		
+			<ion-item ng-repeat="(key, hook) in hooks" style="height: 120px;">
+
+			    <input type="hidden" value="{{callState = hook.callState || 'Alerting'}}" />
+			    <input type="hidden" value="{{call = example[callState].call;}}" />
+				
+				<div class="row row-center" style="height: 100%; padding: 0;">
+					
+					<div class="col col-80" style="padding: 0;">
+						
+						<p style="font-size: 26px; line-height: 30px; color: #336699;">{{hook.title}}</p>
+							
+						<p style="font-size: 10px; line-height: 14px; margin: auto;">
+							
+							<span ng-if="call.dummy">Waiting on call to be <b>{{callState}}</b>.</span>
+							<span ng-if="!call.dummy">Created when call was <b>{{callState}}</b>.</span>
+							
+						</p>
+						
+					</div>
+					
+					<div class="col" style="text-align: right;">
+						<a
+							class="button"
+							style="font-size: 22px; margin: auto; padding: 0; width: 52px; height: 52px; border-radius: 100%;"
+							ng-href="{{sample(hook.value, callState)}}" target="_blank"
+							ng-disabled="call.dummy"
+							ng-class="{
+								'button-energized': !call.dummy && hook.callState == 'Alerting' && current.call.call.state == 'Alerting',
+								'button-balanced': !call.dummy && hook.callState == 'Released' && current.call.call.state == 'Released',
+								'button-assertive': !call.dummy && hook.callState == 'Active' && current.call.call.state == 'Active',
+								'button-dark': !call.dummy && hook.callState == 'Detached' && current.call.call.state == 'Detached'
+							}"
+						>
+							<div class="row row-center" style="height: 100%;">
+								<div class="col">
+									<i class="ion-android-open"></i>
+								</div>
+							</div>
+						</a>
+					</div>
+					
+				</div>
+				
+			</ion-item>
+		
+		</ion-list>
+		
+    </ion-content>
+    
+</ion-view>

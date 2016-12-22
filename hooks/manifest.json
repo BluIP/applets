@@ -1,0 +1,22 @@
+{
+	"title": "Hooks",
+	"description": "Append call parameters to any URL and dynamically bring up external content within the Dialer.",
+	"version": "2.0.0",
+	"changelog": [
+		"Added new tabs & screen pops."
+	],
+	"runtime": "app.js",
+	"options_page": "settings.html",
+	"routes": [{
+		"title": "Hooks",
+		"icon": "logo.svg",
+		"up": "app",
+		"views": {
+			"menuContent": {
+				"template": "index.html"
+			}
+		},
+		"show": "session",
+		"tags": ["get", "post", "autopop", "popup", "api", "rest"]
+	}]
+}

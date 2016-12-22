@@ -1,0 +1,22 @@
+{
+	"title": "MY NEW APP!",
+	"description": "An app that we created.",
+	"version": "2.0.0",
+	"changelog": [
+		"Something new!"
+	],
+	"runtime": "applets/dummy/app.js",
+	"options_page": "applets/dummy/settings.html",
+	"routes": [{
+		"title": "Money Maker",
+		"icon": "logo.svg",
+		"up": "app",
+		"views": {
+			"menuContent": {
+				"templateUrl": "applets/dummy/index.html"
+			}
+		},
+		"show": "session",
+		"tags": ["sales", "auto", "dial"]
+	}]
+}

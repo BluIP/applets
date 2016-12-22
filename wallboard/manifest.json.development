@@ -1,0 +1,27 @@
+{
+	"title": "Wallboard",
+	"description": "Call center supervisors can monitor live queue details. Including # of agents staffed, idle, average wait and handling time, plus more.",
+	"version": "2.1.4",
+	"changelog": [
+		"No pointer events on fullscreen.",
+		"Agent status is now displayed in half the slider's speed.",
+		"Single queue agent/stats interval has been fixed.",
+		"Completely reloading is now active. Reloads every 24 hours by default.",
+		"Agent status polls every 5 minutes.",
+		"Queues are refetched every hour."
+	],
+	"runtime": "applets/wallboard/app.js",
+	"options_page": "applets/wallboard/settings.html",
+	"routes": [{
+		"title": "Wallboard",
+		"icon": "logo.svg",
+		"up": "app",
+		"views": {
+			"menuContent": {
+				"templateUrl": "applets/wallboard/index.html"
+			}
+		},
+		"show": "session",
+		"tags": ["ACD", "Agent"]
+	}]
+}
