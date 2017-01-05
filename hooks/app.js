@@ -145,6 +145,31 @@ app.register.controller('hooksController', function($rootScope, $scope, $compile
 				"formatedAddress": "+1 818-207-8000",
 				"cleanAddress": "8182078000"
 			}
+		},
+		"Held": {
+			"call": {
+				"dummy": true,
+				"callId": "callhalf-313004789:0",
+				"extTrackingId": "1570863:2",
+				"networkCallId": "318776226_132049705@68.68.123.123",
+				"personality": "Terminator",
+				"state": "Held",
+				"remoteParty": {
+					"name": "JOHN ADAMS DOE",
+					"address": "tel:+18182078000",
+					"callType": "Network"
+				},
+				"endpoint": {
+					"@attributes": {
+						"type": "AccessEndpoint"
+					},
+					"addressOfRecord": "8188396400@bluip.com"
+				},
+				"appearance": "1",
+				"startTime": "1483568748909",
+				"answerTime": "1483568751813",
+				"heldTime": "1483568754584"
+			}
 		}
 	};
 	

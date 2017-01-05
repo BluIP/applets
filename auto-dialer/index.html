@@ -1,95 +1,62 @@
-<ion-view view-title="Auto Dialer" ng-controller="autoCtrl">
+<ion-view view-title="Auto Dialer" ng-controller="autoCtrl" ngf-drop="dropped($files)" ngf-multiple="false">
 	
-    <ion-content style="padding: 15px;">
-    
-	<div class="list card">
-		<div class="item">
-			<h1 style="font-weight: 300;color: #8BC34A;">Hello there!</h1>
-			<p>Give me a URL that points to the CSV spreadsheet file.</p>
-		</div>
+	<ion-nav-buttons side="left">
+	
+		<button
+		class="button button-icon button-clear ion-refresh"
+		ng-click="reset();"
+		ng-if="!current.active"></button>
 		
-		<div class="item item-icon-left balanced">
-			<i class="icon ion-android-globe"></i>
-			<input style="width: 100%;" id="csv-url" type="text" placeholder="Enter URL" ng-model="current.csvurl">
-		</div>
-	</div>
+    </ion-nav-buttons>
 	
-<!-- 	<textarea>{{current.call}}</textarea> -->
+	<ion-nav-buttons side="right">
 	
-	<table width="100%">
-		<tr>
-			<td width="50%" style="text-align: center;">
-				<button ng-click="beginCalling();"
-				ng-if="!current.fetching"
-				style="
-				width: 80px;
-				height: 80px;
-				border-radius: 50px;
-				background-color: #3F51B5;
-				color: #fff;
-				border: none;
-				outline: none;">
-					<i style="font-size: 24pt;" class="icon ion-ios-color-wand"></i>
-				</button>
-			
-				<button ng-if="current.fetching"
-				style="
-				width: 80px;
-				height: 80px;
-				border-radius: 50px;
-				background-color: #9E9E9E;
-				color: #fff;
-				border: none;
-				outline: none;">
-					<i style="font-size: 24pt;" class="fa fa-circle-o-notch fa-spin animated"></i>
-				</button>
-				
-				<h5 ng-show="!current.fetched">Fetch CSV</h5>
-				<h5 ng-show="current.fetched">Fetch Again</h5>
-			</td>
-			<td ng-if="current.fetched" width="50%" style="text-align: center;">
-				<button ng-click="beginCalling();" ng-show="!current.calling"
-				style="
-				width: 80px;
-				height: 80px;
-				border-radius: 50px;
-				background-color: #8BC34A;
-				border: none;
-				outline: none;">
-					<h2 style="color: #fff; margin: 0;">{{ csvdata.length }}</h2>
-				</button>
-				
-				<button ng-click="beginCalling();" ng-show="current.calling"
-				style="
-				width: 80px;
-				height: 80px;
-				border-radius: 50px;
-				background-color: #D32F2F;
-				color: #fff;
-				border: none;
-				outline: none;">
-					<i style="font-size: 24pt;" class="fa fa-close"></i>
-				</button>
-				
-				<h5 ng-show="!current.calling">Start Calling</h5>
-				<h5 ng-show="current.calling">Stop Calls</h5>
-			</td>
-		</tr>
-	</table>
-	
-	<div class="list card" ng-if="current.fetched">
-		<div class="item">
-			<h1 style="font-weight: 300; color: #8BC34A">Upcoming Calls</h1>
-			<p>Calls will be dialed automatically.</p>
+		<button
+		class="button button-icon button-clear ion-play"
+		ng-click="start();"
+		ng-if="!current.active"></button>
+		<button
+		class="button button-icon button-clear ion-stop"
+		ng-click="stop();"
+		ng-if="current.active"></button>
+		
+    </ion-nav-buttons>
+    
+	<ion-header-bar class="bar-subheader bar bar-header" style="background-color: #0099E4;">
+		<div class="row" style="padding: 2px;">
+			<div class="col col-50" ngf-select="dropped($files)">
+				<span style="color: #fff;">{{ current.list.length || 'Load File' }}</span>
+			</div>
+			<div class="col" ng-click="changeGap();">
+				<span style="color: #fff;"> {{ current.selected / 1000 }} Seconds </span>
+			</div>
 		</div>
-		<div class="item" style="background-color: #8BC34A; height: 10px; padding: 0;">
-		</div>
-		<a id="call-{{ csvdata.indexOf(item) }}" class="item item-icon-left dark" ng-repeat="item in csvdata" href="tel:{{ item[1] }}">
-			<i style="color: #8BC34A; font-size: 26pt;" class="icon ion-android-time"></i>
-			<span style="font-weight: 600; font-size: 14pt;">{{ item[0] }}</span><br/>
-			<span>{{ item[1] }}</span>
-		</a>
-	</div>
+	</ion-header-bar>
+    
+    <ion-content style="background-image: url({{ current.list.length ? '' : 'http://cdn.bluip.io/autodialer.svg' }}); background-size: 80%; background-repeat: no-repeat; background-position: center center;">
+    
+    	<div class="row" ng-if="!current.list.length" style="height: 100%;">
+	    	
+	    	<div class="col" style="text-align: center;">
+	    	</div>
+	    	
+    	</div>
+    
+    	<ion-list ng-if="current.list.length">
+    	
+    		<ion-item ng-repeat="(key, item) in current.list" ng-class="{'active': item.active}">
+    		
+    			<div class="row">
+	    			
+	    			<div class="col hideOverflow">{{item.call ? item.call.state : 'Uncalled'}}</div>
+	    			
+	    			<div class="col hideOverflow">{{item.Name}}</div>
+	    			
+    			</div>
+    			
+    		</ion-item>
+
+    	</ion-list>    
 		
     </ion-content>
     

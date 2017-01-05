@@ -13,15 +13,24 @@
 		
 		<ion-list>
 		
-			<ion-item class="item item-divider" style="height: 80px;">
+			<ion-item class="item item-divider" style="height: 100px;">
 				<div class="row row-center" style="height: 100%; padding: 0;">
 					
 					<div class="col col-80" style="padding: 0;">
+						
 						<div ng-if="!current.callId">Make or receive a call!</div>
+						
 						<div ng-if="current.callId">
+							
 							<span>{{current.call.call.remoteParty.name || current.call.call.formatedAddress}}</span>
 							<span>({{current.call.call.state}})</span>
+							
+							<div style="font-size: 14px; opacity: .9;">{{current.call.call.startTime | date: 'MM/dd/yyyy @ h:mma'}}</div>
+							
+							<div style="font-size: 12px; opacity: .7;">{{current.callId}}</div>
+							
 						</div>
+						
 					</div>
 					
 					<div class="col" style="text-align: right">
@@ -32,6 +41,7 @@
 								'button-energized': !call.dummy && current.call.call.state == 'Alerting',
 								'button-balanced': !call.dummy && current.call.call.state == 'Released',
 								'button-assertive': !call.dummy && current.call.call.state == 'Active',
+								'button-royal': !call.dummy && current.call.call.state == 'Held',
 								'button-dark': !call.dummy && current.call.call.state == 'Detached'
 							}"
 							ng-click="notify({
@@ -41,9 +51,7 @@
 							});"
 						>
 							<div class="row row-center" style="height: 100%;">
-								<div class="col">
-									<i class="ion-information-circled"></i>
-								</div>
+								<div class="col"></div>
 							</div>
 						</a>
 					</div>
@@ -78,17 +86,18 @@
 							class="button"
 							style="font-size: 22px; margin: auto; padding: 0; width: 52px; height: 52px; border-radius: 100%;"
 							ng-href="{{sample(hook.value, callState)}}" target="_blank"
-							ng-disabled="call.dummy"
+							ng-if="!call.dummy"
 							ng-class="{
 								'button-energized': !call.dummy && hook.callState == 'Alerting' && current.call.call.state == 'Alerting',
 								'button-balanced': !call.dummy && hook.callState == 'Released' && current.call.call.state == 'Released',
 								'button-assertive': !call.dummy && hook.callState == 'Active' && current.call.call.state == 'Active',
+								'button-royal': !call.dummy && hook.callState == 'Held' && current.call.call.state == 'Held',
 								'button-dark': !call.dummy && hook.callState == 'Detached' && current.call.call.state == 'Detached'
 							}"
 						>
 							<div class="row row-center" style="height: 100%;">
 								<div class="col">
-									<i class="ion-android-open"></i>
+									<i class="ion-link"></i>
 								</div>
 							</div>
 						</a>

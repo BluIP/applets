@@ -1,9 +1,11 @@
 {
 	"title": "Hooks",
 	"description": "Append call parameters to any URL and dynamically bring up external content within the Dialer.",
-	"version": "2.0.0",
+	"version": "2.0.2",
 	"changelog": [
-		"Added new tabs & screen pops."
+		"Showing the call ID.",		
+		"Displaying current call star time.",
+		"Hiding links until they qualify."
 	],
 	"runtime": "app.js",
 	"options_page": "settings.html",

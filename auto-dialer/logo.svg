@@ -1,51 +1,56 @@
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 477 531.5">
-  <defs>
-    <clipPath id="clip-path" transform="translate(-46.7 -29)">
-      <circle cx="300" cy="300" r="298.1" style="fill: none"/>
-    </clipPath>
-  </defs>
-  <title>billing_logo</title>
-  <g style="clip-path: url(#clip-path)">
-    <g id="_Group_" data-name="&lt;Group&gt;">
-      <rect id="_Path_" data-name="&lt;Path&gt;" x="125.8" y="262" width="278.6" height="187.73" style="fill: #f0ede0"/>
-      <rect id="_Path_2" data-name="&lt;Path&gt;" x="452.8" y="262" width="24.2" height="187.73" style="fill: #f0ede0"/>
-      <g id="_Group_2" data-name="&lt;Group&gt;">
-        <path id="_Path_3" data-name="&lt;Path&gt;" d="M402.6,366.7H384.4a6.1,6.1,0,1,1,0-12.1h18.2a6.1,6.1,0,1,1,0,12.1" transform="translate(-46.7 -29)" style="fill: #d6d0bb"/>
-        <path id="_Path_4" data-name="&lt;Path&gt;" d="M311.8,342.5H293.6a6.1,6.1,0,1,1,0-12.1h18.2a6.1,6.1,0,1,1,0,12.1" transform="translate(-46.7 -29)" style="fill: #d6d0bb"/>
-        <path id="_Path_5" data-name="&lt;Path&gt;" d="M402.6,342.5H360.2a6.1,6.1,0,0,1,0-12.1h42.4a6.1,6.1,0,1,1,0,12.1" transform="translate(-46.7 -29)" style="fill: #d6d0bb"/>
-        <path id="_Path_6" data-name="&lt;Path&gt;" d="M336,342.5a6.3,6.3,0,0,1-4.3-1.8,6.1,6.1,0,1,1,4.3,1.8" transform="translate(-46.7 -29)" style="fill: #d6d0bb"/>
-        <path id="_Path_7" data-name="&lt;Path&gt;" d="M360.2,366.7H317.8a6.1,6.1,0,1,1,0-12.1h42.4a6.1,6.1,0,0,1,0,12.1" transform="translate(-46.7 -29)" style="fill: #d6d0bb"/>
-        <path id="_Path_8" data-name="&lt;Path&gt;" d="M293.6,366.7a6.3,6.3,0,0,1-4.3-1.8,6.4,6.4,0,0,1-1.8-4.3,6.2,6.2,0,0,1,1.8-4.3,6.3,6.3,0,0,1,8.6,0,6.2,6.2,0,0,1,1.8,4.3,6,6,0,0,1-6.1,6.1" transform="translate(-46.7 -29)" style="fill: #d6d0bb"/>
-        <path id="_Path_9" data-name="&lt;Path&gt;" d="M227,434.7a30.3,30.3,0,0,1-30.3-30.3,6.1,6.1,0,1,1,12.1,0,18.2,18.2,0,0,0,32,11.7,8.8,8.8,0,0,0,2-6.7,9.9,9.9,0,0,0-3.8-6.8L207.4,378a22.1,22.1,0,0,1-8.4-15.1,20.8,20.8,0,0,1,4.8-15.8,30.3,30.3,0,0,1,53.4,19.5,6.1,6.1,0,0,1-12.1,0,18.2,18.2,0,0,0-32-11.7,8.8,8.8,0,0,0-2,6.7,9.9,9.9,0,0,0,3.8,6.8l31.7,24.6a22.1,22.1,0,0,1,8.4,15.1,20.9,20.9,0,0,1-4.8,15.8A30.2,30.2,0,0,1,227,434.7" transform="translate(-46.7 -29)" style="fill: #56b46f"/>
-        <path id="_Path_10" data-name="&lt;Path&gt;" d="M227,445.4a6.1,6.1,0,0,1-6.1-6.1v-109a6.1,6.1,0,0,1,12.1,0v109a6.1,6.1,0,0,1-6.1,6.1" transform="translate(-46.7 -29)" style="fill: #56b46f"/>
-        <path id="_Path_11" data-name="&lt;Path&gt;" d="M312.6,399.4c-13.3,6.9-17.7,20.1-19.4,33.8l-7.5-6.3c-5.9-5-14.6,3.5-8.6,8.6l17,14.2c4,3.4,10.1,1.3,10.3-4.3.4-13.1,1.1-28.7,14.2-35.6,6.9-3.6.8-14.1-6.1-10.5" transform="translate(-46.7 -29)" style="fill: #d6d0bb"/>
-        <path id="_Path_12" data-name="&lt;Path&gt;" d="M369.2,430.2a14.3,14.3,0,0,0-16.3-6.6c-8.3,2.3-18.1,12.4-23.8.6-3.5-7-13.9-.9-10.5,6.1A20.6,20.6,0,0,0,345,440.6c2.5-.9,11.6-8.1,13.7-4.3,3.8,6.8,14.3.7,10.5-6.1" transform="translate(-46.7 -29)" style="fill: #d6d0bb"/>
-        <rect id="_Path_13" data-name="&lt;Path&gt;" x="404.3" y="216.6" width="24.2" height="24.22" style="fill: #e6e7e9"/>
-        <path id="_Path_14" data-name="&lt;Path&gt;" d="M475.3,203.2H463.1a12.1,12.1,0,0,0-4.7.9l-2,1.1a12,12,0,0,0-5.3,10v30.4h24.2Z" transform="translate(-46.7 -29)" style="fill: #d85b4b"/>
-        <path id="_Path_15" data-name="&lt;Path&gt;" d="M487.5,203.2h0a12.1,12.1,0,0,1,4.7.9,12,12,0,0,0-4.7-.9" transform="translate(-46.7 -29)" style="fill: #d85b4b"/>
-        <rect id="_Path_16" data-name="&lt;Path&gt;" x="428.5" y="240.9" width="24.2" height="230.12" style="fill: #e38e23"/>
-        <rect id="_Path_17" data-name="&lt;Path&gt;" x="428.5" y="216.6" width="24.2" height="24.22" style="fill: #cfcece"/>
-        <path id="_Path_18" data-name="&lt;Path&gt;" d="M499.5,215.2h0a12,12,0,0,0-5.3-10,12,12,0,0,1,5.3,10" transform="translate(-46.7 -29)" style="fill: #d85b4b"/>
-        <path id="_Path_19" data-name="&lt;Path&gt;" d="M499.5,245.6V215.2a12,12,0,0,0-5.3-10l-2-1.1a12.1,12.1,0,0,0-4.7-.9H475.3v42.4Z" transform="translate(-46.7 -29)" style="fill: #c56256"/>
-        <polygon id="_Path_20" data-name="&lt;Path&gt;" points="452.7 471 404.3 471 428.5 513.4 452.7 471" style="fill: #edddc8"/>
-        <path id="_Path_21" data-name="&lt;Path&gt;" d="M469.2,554.4a6.1,6.1,0,0,0,12.1,0V530.2H469.2Z" transform="translate(-46.7 -29)" style="fill: #5f5f5f"/>
-        <rect id="_Path_22" data-name="&lt;Path&gt;" x="404.3" y="240.9" width="24.2" height="230.12" style="fill: #f39d20"/>
-      </g>
-    </g>
-    <g>
-      <path d="M353.3,29H72.7a26,26,0,0,0-26,26V242a26,26,0,0,0,26,26H353.3a26,26,0,0,0,26-26V54.9A26,26,0,0,0,353.3,29Z" transform="translate(-46.7 -29)" style="fill: #5d647f"/>
-      <path d="M161.1,132.9H98.7a10.4,10.4,0,0,1-10.4-10.4V80.9A10.4,10.4,0,0,1,98.7,70.5h62.4a10.4,10.4,0,0,1,10.4,10.4v41.6A10.4,10.4,0,0,1,161.1,132.9Z" transform="translate(-46.7 -29)" style="fill: #ffd100"/>
-      <g>
-        <path d="M124.7,200.4h-26A10.4,10.4,0,0,1,88.3,190v-5.2a10.4,10.4,0,0,1,10.4-10.4h26a10.4,10.4,0,0,1,10.4,10.4V190A10.4,10.4,0,0,1,124.7,200.4Z" transform="translate(-46.7 -29)" style="fill: #b8bac0"/>
-        <path d="M192.2,200.4h-26A10.4,10.4,0,0,1,155.9,190v-5.2a10.4,10.4,0,0,1,10.4-10.4h26a10.4,10.4,0,0,1,10.4,10.4V190A10.4,10.4,0,0,1,192.2,200.4Z" transform="translate(-46.7 -29)" style="fill: #b8bac0"/>
-        <path d="M259.8,200.4h-26A10.4,10.4,0,0,1,223.4,190v-5.2a10.4,10.4,0,0,1,10.4-10.4h26a10.4,10.4,0,0,1,10.4,10.4V190A10.4,10.4,0,0,1,259.8,200.4Z" transform="translate(-46.7 -29)" style="fill: #b8bac0"/>
-        <path d="M327.3,200.4h-26A10.4,10.4,0,0,1,291,190v-5.2a10.4,10.4,0,0,1,10.4-10.4h26a10.4,10.4,0,0,1,10.4,10.4V190A10.4,10.4,0,0,1,327.3,200.4Z" transform="translate(-46.7 -29)" style="fill: #b8bac0"/>
-      </g>
-      <path d="M197.4,231.6H93.5a5.2,5.2,0,0,1,0-10.4H197.4a5.2,5.2,0,1,1,0,10.4Z" transform="translate(-46.7 -29)" style="fill: #8a8895"/>
-      <path d="M265,231.6H218.2a5.2,5.2,0,0,1,0-10.4H265a5.2,5.2,0,1,1,0,10.4Z" transform="translate(-46.7 -29)" style="fill: #8a8895"/>
-      <path d="M285.8,122.5a31.2,31.2,0,1,1,0-41.6" transform="translate(-46.7 -29)" style="fill: #ff4f19"/>
-      <polygon points="124.7 77.9 72.7 77.9 72.7 67.6 124.7 67.6 124.7 57.2 72.7 57.2 72.7 41.6 62.4 41.6 62.4 103.9 72.7 103.9 72.7 88.3 124.7 88.3 124.7 77.9" style="fill: #ff9500"/>
-      <circle cx="259.8" cy="72.7" r="31.2" style="fill: #ffd100"/>
-    </g>
-  </g>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 600 600" style="enable-background:new 0 0 600 600;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#22B573;}
+	.st1{fill:#FFFFFF;}
+	.st2{opacity:0.2;fill:#FFFFFF;}
+</style>
+<g>
+	<circle class="st0" cx="300" cy="300" r="298"/>
+	<g>
+		<circle class="st1" cx="417.79" cy="181.94" r="47.76"/>
+		<circle class="st1" cx="300.27" cy="181.94" r="47.76"/>
+		<circle class="st1" cx="181.68" cy="181.94" r="47.76"/>
+		<circle class="st1" cx="417.79" cy="300" r="47.76"/>
+		<circle class="st1" cx="300.27" cy="300" r="47.76"/>
+		<circle class="st1" cx="181.68" cy="300" r="47.76"/>
+		<circle class="st1" cx="418.32" cy="418.06" r="47.76"/>
+		<circle class="st1" cx="300.8" cy="418.06" r="47.76"/>
+		<circle class="st1" cx="182.21" cy="418.06" r="47.76"/>
+	</g>
+	<path class="st2" d="M511.41,125.67c-50.22-60.76-126.16-99.48-211.14-99.48C149.05,26.19,26.46,148.78,26.46,300
+		c0,36.52,7.17,71.35,20.14,103.21L511.41,125.67z"/>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
 </svg>
