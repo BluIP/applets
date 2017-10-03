@@ -2,68 +2,49 @@
 // APP - AUTO DIALER
 // ==========================================================================
 
-app.register.controller('autoCtrl', function($rootScope, $scope, $compile, $timeout, $http) {
+app.register.controller('autoCtrl', function($rootScope, $scope, $compile, $timeout, $http, $ionicActionSheet) {
 	
-	//http://laxxsp1.masteraccess.com/com.broadsoft.xsi-actions/test/v2.0/user/userid/calls/
-	
-	/*
-		{
-		"callId": "callhalf-259129459:0",
-		"extTrackingId": "1210587:2",
-		"networkCallId": "BW0045550790401171865306615@199.168.176.135",
-		"personality": "Originator",
-		"state": "Released",
-		"releasingParty": "localRelease",
-		"remoteParty": {
-			"address": "tel:3233711507",
-			"callType": "Network"
-		},
-		"startTime": "1483490755007",
-		"releaseTime": "1483490756453",
-		"formatedAddress": "+1 323-371-1507",
-		"cleanAddress": "3233711507"
-		}
-	*/	
-	
+	$scope.callId = null;
 	$scope.current = {
-		active: false
-	};
-	
-	$scope.current.list = [
-/*
-		{
-			Name: 'Andy\'s Cell',
-			Number: '3233711507'
+		active: false,
+		list: [],
+		gaps: {
+			0: '0 Seconds',
+			5000: '5 Seconds',
+			15000: '15 Seconds',
+			30000 : '30 Seconds',
+			60000 : '60 Seconds'
 		},
-		{
-			Name: 'Andy\'s Voicemail',
-			Number: '6414'
-		}
-*/
-	];
+		gap: 5000
+	};
 	
 // ==========================================================================
 // APP - ON NEW CALL
 // ==========================================================================
-	
+
 	$(window).on('Call', function(e, data) {
 		
 		if (!data || !data.call || !data.call.callId) return;
 		
-		var match = _.find($scope.current.list, {callId: data.call.callId});
+		if ($scope.callId != data.call.callId) return;
 		
+		var callId = data.call.callId;
+		var state = data.call.state;
+		var match = _.find($scope.current.list, { callId: callId });
+		
+		// SET CURRENT LIST ITEM'S CALL DATA DETAILS
 		if (match) match.call = data.call;
-		
-		if (data.call.state == 'Released' && match) match.active = false;
-		
-		
-		if (data.call.state == 'Released') $timeout(function() {
 			
-			// IF NO ACTIVE CALL, CALL NEXT
-			if (!_.find($scope.current.list, {active: true})) $scope.tick();
+		// DEACTIVATE CURRENT ITEM
+		if (match && state == 'Released') {
 			
-		}, $scope.current.gap.selected);
-		
+			match.active = false;
+			
+		}
+
+		// MAKE NEXT CALL
+		if (state == 'Released') $scope.tick();
+
 	});
 	
 // ==========================================================================
@@ -83,27 +64,30 @@ app.register.controller('autoCtrl', function($rootScope, $scope, $compile, $time
 	$scope.start = function() {
 		
 		if (!$scope.current.list.length) return $rootScope.notify({
-			memo: 'Load some data!'
+			type: 'error',
+			title: 'No List Loaded',
+			memo: 'You can load either a <b>CSV</b> or <b>XLXS</b>',
+			showCancelButton: true,
+			confirmButtonText: 'Load'
+		}, function(c) {
+			
+			if (c == true) $scope.loadList();
+			
 		});
-		
-		var start = function() {
-			
-			$scope.current.active = true; $scope.$apply();
-			
-			$scope.tick($scope.current.list[0]);
-			
-		};
 		
 		$rootScope.notify({
 			type: 'question',
 			title: 'Ready?',
-			memo: 'Click "OK" to start making calls!',
+			memo: 'Start the automated calling process.',
 			showCancelButton: true
 		}, function(c) {
 			
-			if (c == true) start();
+			if (c != true) return;
 			
-		});	
+			$scope.current.active = true; $scope.$apply();
+			$scope.tick();
+			
+		});
 
 	};
 	
@@ -113,53 +97,93 @@ app.register.controller('autoCtrl', function($rootScope, $scope, $compile, $time
 
 	$scope.tick = function(item) {
 		
+		// IF APPLET IS RUNNING
 		if (!$scope.current.active) return;
 		
+		var active = _.find($scope.current.list, { active: true }); if (active) return;
+		
+		// USE ITEM GIVEN OR FIND AN ITEM THAT HASN'T BEEN CALLED
 		var item = item || _.find($scope.current.list, function(i) {
 			
 			return !i.call;
 			
 		});
 		
+		// IF NO MORE CALLS TO MAKE
 		if (!item) {
 			
-			$rootScope.notify({
-				type: 'success',
-				memo: 'No more items need to be called!'
-			});
+			$scope.stop();
 			
-			return $scope.stop();
+			return $rootScope.notify({
+				type: 'success',
+				title: 'Done!'
+			});
 			
 		}
 		
-		if (item.call) return $scope.stop();
+		var number = item.number;
 		
-		var number = item.Number || item['"Number"'] || item.number;
+		// IF ITEM DOESN'T HAVE A NUMBER
+		if (!number || !number.length) {
+			
+			// GIVE ITEM A FAKE CALL SO THAT IT DOESN'T TRY TO RECALL THE SAME ITEM
+			item.call = {
+				error: 'Missing a number!'
+			};
+			
+			return $scope.tick();
+			
+		}
+		
+		// COUNTDOWN
+		$scope.countDown(function() {
+			
+			// MAKE THE CALL
+			broadsoft.request({
+				method: 'POST',
+				url: '/user/{{userId}}/calls/new?address=' + number
+			}, function(r) {
 				
-		// MAKE THE CALL
-		broadsoft.request({
-			method: 'POST',
-			url: '/user/{{userId}}/calls/new?address=' + number
-		}, function(r) {
-			
-			try {
+				// IF UNABLE TO MAKE THE CALL NO MATTER WHAT!
+				if (r.status != 201) {
+					
+					var error = 'Unable to make a call to this number!'; try {
+						if (r.data.ErrorInfo) error = r.data.ErrorInfo.summary + '.';
+					} catch(err) {};
+					
+					item.call = { error: error };
+	
+					return swal({
+						type: 'warning',
+						confirmButtonText: 'Skip',
+						showCancelButton: true,
+						title: 'Invalid Number',
+						cancelButtonText: 'Stop',
+						html: '<b>'+ item.number + ' is not a valid number.</b><br><br>\'Skip\' to try next number or \'Stop\' to stop.'
+					}).then(function(r) {
+						if (r == true) $scope.tick();
+					}, function() {
+						$scope.stop(); $scope.$apply();
+					});
+					
+				}
+	
+				item.active = true;
+				
+				// SET A CALL ON THE ITEM SO IT'S NOT RECALLED AGAIN
 				item.call = r.data.CallStartInfo;
-			} catch(err) {};
-			
-			try {
-				item.error = r.data.ErrorInfo;
-			} catch(err) {};
-			
-			if (item.call) item.active = true;
-			if (item.call) item.callId = item.call.callId;
-			
-			if (item.error) console.log('Unable to dial... what should we do here?');
-						
+				
+				// MY APPLET SHOULD ONLY CONTROL CALLS THAT MY APPLET MAKES!
+				$scope.callId = item.call.callId;
+				
+				item.callId = item.call.callId;
+	
+			});
+
 		});
 		
 	};
-	
-	
+
 // ==========================================================================
 // APP - RESET CSV
 // ==========================================================================
@@ -170,43 +194,100 @@ app.register.controller('autoCtrl', function($rootScope, $scope, $compile, $time
 		
 		for(i = 0; i < $scope.current.list.length; i++) {
 			try {
-				$scope.current.list[i].call.state = 'Uncalled';
+				delete $scope.current.list[i].call;
 			} catch(err) {};
 		}
 		
 	};
-	
-	
+
 // ==========================================================================
 // APP - CHANGE TIME GAP BETWEEN CALLS
 // ==========================================================================
 
-	$scope.current.gap = {
-		0 : 0,
-		5 : 5000,
-		15 : 15000,
-		30 : 30000,
-		1 : 60000	
-	};
-	
-	$scope.current.selected = $scope.current.gap[1];
-
 	$scope.changeGap = function() {
 		
-		$rootScope.notify({
+		swal({
 			title: 'Call Break',
-			memo: 'Amount of time between calls.',
+			text: 'Gap of time between calls.<br> Useful for quick notes or catching your breath.',
 			input: 'select',
-			inputOptions: $scope.current.gap,
-			inputPlaceholder: $scope.current.selected,
+			inputOptions: $scope.current.gaps,
+			inputPlaceholder: 'Select Time',
 			showCancelButton: true
-		}).then(function(r) {
-			$scope.current.selected = r;
+		}).then(function (r) {
 			
-			console.log(r);
-		})
+			$scope.current.gap = r; $scope.$apply();
+			
+		});
+		
 	};
 
+// ==========================================================================
+// APP - CLEAR LIST
+// ==========================================================================
+
+	$scope.clearList = function() {
+		
+		$scope.current.list = [];
+	
+	};
+	
+// ==========================================================================
+// APP - LOAD LIST
+// ==========================================================================
+
+	$scope.loadList = function() {
+		
+		$('#add-file').click();
+		
+	};
+	
+// ==========================================================================
+// APP - MENU POPOVER
+// ==========================================================================
+
+	$scope.actionSheet = function() {
+		
+		var hideSheet = $ionicActionSheet.show({
+			buttons: [
+				{ text: 'Reset Calls', fn: $scope.reset },
+				{ text: 'Unload List', fn: $scope.clearList },
+				{ text: 'Load List', fn: $scope.loadList }
+			],
+			titleText: 'Actions',
+			cancelText: 'Close',
+			cancel: function() {},
+			buttonClicked: function(index, item) {
+
+				if (item.fn) item.fn();
+				
+				return true;
+			
+			}
+		});
+		
+	};
+	
+// ==========================================================================
+// APP - COUNT DOWN
+// ==========================================================================
+
+	$scope.countDown = function(callback) {
+		
+		var callback = callback || function() {};
+		var seconds = ($scope.current.gap / 1000) + 1;
+		
+		$('#t').text($scope.current.gap / 1000 + 's');
+			
+		(function countDown() {
+			if (seconds-- > 0 && $scope.current.active) {
+				$('#t').text(seconds + 's');
+				setTimeout(countDown, 1000);
+			} else {
+				if ($scope.current.active) callback();
+			}
+		})();
+		
+	};
 
 // ==========================================================================
 // APP - DROPPED
@@ -221,13 +302,105 @@ app.register.controller('autoCtrl', function($rootScope, $scope, $compile, $time
 			var file = _.toArray(files)[0];
 			
 			if (!file || !file.parsed) return $rootScope.notify({
-				memo: 'Unable to parse file!'
+				title: 'Invalid File Type',
+				memo: 'Please load either a <b>CSV</b> or <b>XLSX</b> file.'
 			});
 			
 			var sheet = _.toArray(file.parsed)[0];
+			var inputOptions = {}; _.each(Object.keys(sheet[0]), function(v) {
+				inputOptions[v] = v;
+			});
 			
-			$scope.current.list = sheet;
+			if (!Object.keys(inputOptions).length) return $rootScope.notify({
+				type: 'error',
+				memo: 'No column keys found!'
+			});
+			
+			var keys = { name: null, number: null };
+			var steps = [
+				{
+					title: 'Pick \'Name\' Column',
+					text: 'This is the name of the person you will be calling.',
+					inputOptions: inputOptions,
+					input: 'select',
+					allowOutsideClick: false,
+					allowEscapeKey: false,
+					confirmButtonText: 'Next',
+					progressSteps: ['1', '2'],
+					preConfirm: function () {
+						return new Promise(function(resolve, reject) {
+							
+							keys['name'] = $('.swal2-select').val();
+							
+							resolve();
+							
+						});
+					}
+				},
+				{
+					animation: false,
+					title: 'Pick \'Phone\' Column',
+					text: 'This is the number to be dialed.',
+					allowOutsideClick: false,
+					allowEscapeKey: false,
+					inputOptions: inputOptions,
+					input: 'select',
+					confirmButtonText: 'Done',
+					progressSteps: ['1', '2'],
+					preConfirm: function () {
+						return new Promise(function(resolve, reject) {
+							
+							keys['number'] = $('.swal2-select').val();
+							
+							resolve();
+							
+						});
+					}
+				}
+			]
+			
+			var list = [];
+			
+			// WAIT A MOMENT WHILE LIST IS LOADED
+			if (files) $timeout(function() {
+				
+				// SWAL TO ALLOW USER TO SELECT COLUMNS				
+				var test = swal.queue(steps).then(function(c) {
+					
+					$timeout(function() {
+					
+						for (i = 0; i < sheet.length; i++) {
+							
+							if (i > 1000) continue;
+							
+							var number = sheet[i][keys.number];
+							
+							if (number) list.push({
+								name: sheet[i][keys.name],
+								number: number
+							});
+							
+						}
+						
+						$scope.current.list = list; $scope.$apply();
+						
+						if (sheet.length > 1000) $timeout(function() {
+							
+							$rootScope.notify({
+								type: 'warning',
+								title: 'List Clipped',
+								memo: '1000 is the max number of entries.'
+							});
+							
+						});
+					
+					});			
+
+				});
+				
+			}, 1500);
 			
 		});
 	};
+	
 });

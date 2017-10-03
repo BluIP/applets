@@ -1,15 +1,15 @@
 // ==========================================================================
-// Dummy
+// APPLET
 // ==========================================================================
 
-app.register.controller('dummyController', function($rootScope, $scope, $compile, $timeout) {
+app.register.controller('appletController', function($rootScope, $scope, $compile, $timeout) {
 	
 	$scope.current = {
 		fetching: false
 	};
 	
 // ==========================================================================
-// Dummy - myFunction
+// APPLET - myFunction
 // ==========================================================================
 
 	$scope.myFunction = function() {

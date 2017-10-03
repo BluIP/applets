@@ -1,10 +1,10 @@
-# Open-source Applets for the Dialer v4
+# Open-source Applets for Auxiliary platform.
 
 What it gives you:
 
- * Easy access to Broadsoft XSI-Actions
+ * Easy access to Broadsoft XSI Actions & Events
  * User Preferences
- * AngularJS & Ionic 1.0 Framework
+ * Javascript Framework
 
 ## Directory Requirements
 
@@ -12,41 +12,48 @@ What it gives you:
  * index.html
  * logo.svg
  * manifest.json
- * settings.html
 
 ## manifest.json
 
 ```json
 {
-	"title": "My Applet",
-	"description": "An app that we created.",
-	"version": "2.0.0",
-	"changelog": [
-		"Something new!"
-	],
-	"runtime": "app.js",
-	"options_page": "settings.html",
+	"title": "New",
+	"description": "My new applet.",
+	"version": "1.0.0",
+	"group": "tools",
+	"icon": "fa fa-phone",
+	"logo": "https://beta.bluip.io/assets/img/logo.svg",
 	"routes": [{
-		"title": "Money Maker",
-		"icon": "logo.svg",
-		"up": "app",
-		"views": {
-			"menuContent": {
-				"template": "index.html"
-			}
-		},
-		"show": "session",
-		"tags": ["sales", "dial"]
-	}]
+		"scrollable": true,
+		"stickable": true,
+		"target": "_auxiliary",
+		"templateUrl": "/api/applet/",
+		"title": "New",
+		"type": "Template",
+		"url": "/new"
+	}],
+	"stickable": true,
+	"tags": [
+		"buddies",
+		"friends",
+		"blf"
+	]
 }
 ```
 
+## APPLET INSTALLATION
+
+ * Download the repo and pick an applet to use as your base.
+ * Change the "title" within the manifest.json. (The applet's title is unique and CANNOT be changed.)
+ * Drag and drop your applet directory into [dev.redial.io](http://dev.redial.io) to register.
+ * Ensure that your file paths are accessible (remote or local).
+
 ## MUST
 
-When making 3rd party HTTP requests, insure they're to a HTTPS hosts.
-
+All HTTP requests must be HTTPS.
 
 ## WEBSITES
 
- * Use [dev.redial.io](http://dev.redial.io) to develop locally.
- * Here's some [documentation](http://docs.redial.io/m/63341).
+ * Use [dev.redial.io](http://dev.redial.io) to develop locally (MAMP).
+
+ * Use [beta.redial.io](https://beta.bluip.io) for the latest experience.

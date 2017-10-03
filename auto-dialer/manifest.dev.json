@@ -6,15 +6,15 @@
 		"Fixing UI",
 		"New Logo"
 	],
-	"runtime": "app.js",
-	"options_page": "settings.html",
+	"runtime": "http://localhost:8888/auto-dialer/app.js",
+	"options_page": "http://localhost:8888/auto-dialer/settings.html",
 	"routes": [{
 		"title": "Auto Dialer",
 		"icon": "logo.svg",
 		"up": "app",
 		"views": {
 			"menuContent": {
-				"template": "index.html"
+				"templateUrl": "http://localhost:8888/auto-dialer/index.html"
 			}
 		},
 		"show": "session",

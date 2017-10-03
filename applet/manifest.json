@@ -1,0 +1,22 @@
+{
+	"title": "Applet",
+	"description": "A basic applet to start developing.",
+	"group": "tools",
+	"version": "1.0.0",
+	"icon": "fa fa-star",
+	"logo": "/api/applet/logo.svg",
+	"runtime": "/api/applet/app.js",
+	"options_page": "/api/applet/settings.html",
+	"changelog": [
+		"Something new!"
+	],
+	"tags": [
+		"food",
+		"fun"
+	],
+	"routes": [{
+		"title": "My New Applet",
+		"url": "/applet",
+		"templateUrl": "/api/applet/"
+	}]
+}

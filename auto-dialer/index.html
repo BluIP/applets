@@ -1,20 +1,29 @@
-<ion-view view-title="Auto Dialer" ng-controller="autoCtrl" ngf-drop="dropped($files)" ngf-multiple="false">
-	
-	<ion-nav-buttons side="left">
-	
-		<button
-		class="button button-icon button-clear ion-refresh"
-		ng-click="reset();"
-		ng-if="!current.active"></button>
+<ion-view view-title="Auto Dialer" ng-controller="autoCtrl" ngf-drop="dropped($files)" ngf-multiple="false" ngf-accept="'.xlsx, .xls, .csv'" ngf-pattern="'.xlsx, .xls, .csv'">
+
+	<style>
 		
-    </ion-nav-buttons>
-	
+		.call-bubble-avatar {
+			width: 40px;
+			height: 40px;
+		    text-align: center;
+			border-radius: 20px;
+			padding-top: 8px;
+		}
+		
+		.call-bubble-avatar span {
+			font-size: 18pt;
+			color: #fff;
+		}
+		
+	</style>
+
 	<ion-nav-buttons side="right">
 	
 		<button
 		class="button button-icon button-clear ion-play"
 		ng-click="start();"
 		ng-if="!current.active"></button>
+		
 		<button
 		class="button button-icon button-clear ion-stop"
 		ng-click="stop();"
@@ -23,34 +32,72 @@
     </ion-nav-buttons>
     
 	<ion-header-bar class="bar-subheader bar bar-header" style="background-color: #0099E4;">
-		<div class="row" style="padding: 2px;">
-			<div class="col col-50" ngf-select="dropped($files)">
-				<span style="color: #fff;">{{ current.list.length || 'Load File' }}</span>
+		<div class="row" style="padding: 2px; color: #fff; font-size: 14pt;">
+			<div ng-if="current.list.length > 0" class="col"
+			style="text-align: left; padding-left: 31px;">
+				<span>{{ current.list.length }}</span>
 			</div>
-			<div class="col" ng-click="changeGap();">
-				<span style="color: #fff;"> {{ current.selected / 1000 }} Seconds </span>
+			<div ng-if="current.list.length == 0" id="add-file" class="col"
+				ngf-select="dropped($files)"
+				ngf-multiple="false"
+				ngf-accept="'.xlsx, .xls, .csv'"
+				ngf-pattern="'.xlsx, .xls, .csv'"
+				style="text-align: center;">
+				<span class="ion-android-add"></span>
+				<span>Add File</span>
+			</div>
+			<div ng-if="current.list.length"
+				class="col" ng-click="changeGap();"
+				style="text-align: center; color: #fff;">
+				<span class="ion-android-time"></span>
+				<span id="t">{{ current.gap / 1000 }}s</span>
+			</div>
+			<div ng-if="current.list.length" class="col"
+			ng-click="actionSheet();" style="text-align: right; color: #fff;">
+				<span style="font-size: 18pt;" class="ion-android-menu"></span>
 			</div>
 		</div>
 	</ion-header-bar>
     
-    <ion-content style="background-image: url({{ current.list.length ? '' : 'http://cdn.bluip.io/autodialer.svg' }}); background-size: 80%; background-repeat: no-repeat; background-position: center center;">
+	<ion-content style="background-image: url({{ current.list.length ? '' : 'https://cdn.bluip.io/autodialer.svg' }}); background-size: 60%; background-repeat: no-repeat; background-position: center center;">
     
-    	<div class="row" ng-if="!current.list.length" style="height: 100%;">
-	    	
-	    	<div class="col" style="text-align: center;">
-	    	</div>
-	    	
-    	</div>
-    
-    	<ion-list ng-if="current.list.length">
+		<ion-list ng-if="current.list.length">
     	
-    		<ion-item ng-repeat="(key, item) in current.list" ng-class="{'active': item.active}">
+    		<ion-item ng-repeat="(key, item) in current.list" ng-if="item.name" ng-class="{'active': item.active}">
     		
     			<div class="row">
 	    			
-	    			<div class="col hideOverflow">{{item.call ? item.call.state : 'Uncalled'}}</div>
+	    			<div style="padding-top: 10px;" class="col"
+		    		ng-if="item.call.state.length == 0 || !item.call.state">
+			    		<div class="call-bubble-avatar" style="background-color: {{ item.call.error ? '#E53935' : '#1565C0' }};">
+		    				<span ng-if="!item.call.error" style="color: #fff; font-weight:500; font-size: 9pt;">{{ $index + 1 }}</span>
+		    				<span ng-if="item.call.error" class="ion-close"></span>
+	    				</div>
+	    			</div>
 	    			
-	    			<div class="col hideOverflow">{{item.Name}}</div>
+	    			<div class="col" ng-if="item.call.state == 'Active' || item.call.state == 'Held' || item.call.state == 'Alerting'">
+		    			<div class="call-bubble-avatar" style="background-color: #F44336;">
+		    				<span ng-if="item.call.state == 'Active' || item.call.state == 'Held'"
+		    				class="ion-ios-telephone"></span>
+		    				<span ng-if="item.call.state == 'Alerting'"
+		    				class="ion-ios-bell"></span>
+	    				</div>
+	    			</div>
+	    			
+	    			<div class="col" ng-if="item.call.state == 'Released'">
+		    			<div class="call-bubble-avatar" style="background-color: #4CAF50;">
+		    				<span class="ion-checkmark"></span>
+	    				</div>
+	    			</div>
+  			
+	    			<div class="col col-75 hideOverflow">
+		    			<a href="tel:{{item.number}}">
+			    			<span style="font-size: 14pt; font-weight: 500; color: #000;">{{ item.name }}</span><br>
+			    			<span style="color: #9E9E9E;">
+			    				<span>{{ PhoneFormat.formatLocal('US', item.number) }}</span>
+			    			</span>
+		    			</a>
+		    		</div>
 	    			
     			</div>
     			
