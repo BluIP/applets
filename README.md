@@ -46,7 +46,7 @@ What it gives you:
 
 1. Download the repo and pick an applet to use as your base.
 2. Change the "title" within the manifest.json. (The applet's title is unique and CANNOT be changed.)
-3. Drag and drop your applet directory into [dev.redial.io](http://dev.redial.io) to register.
+3. Drag and drop your applet directory into [beta.bluip.io/#/applets](https://beta.bluip.io/#/applets) to register.
 4. Ensure that your file paths are accessible (remote or local).
 
 ## MUST
