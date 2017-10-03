@@ -1,18 +1,14 @@
-<ion-view view-title="Money Maker" ng-controller="appletController">
+<div ng-controller="appletController" style="padding: 15px;">
+
+	<h1>Joe's Data</h1>
+
+	<h1 style="font-weight: 300;">A place where I can build and integrate!</h1>
 	
-    <ion-content style="padding: 15px;">
-    	
-    	<h1>Joes Data</h1>
-    
-		<h1 style="font-weight: 300;">A place where I can build and integrate!</h1>
+	<p>Using simple HTML5 and AngularJS.</p>
+	
+	<button class="button" ng-click="myFunction();">
+		<span ng-if="!current.fetching">Fetch</span>
+		<span ng-if="current.fetching">Fetching..</span>
+	</button>
 		
-		<p>Using simple HTML5 and AngularJS.</p>
-		
-		<button class="button" ng-click="myFunction();">
-			<span ng-if="!current.fetching">Fetch</span>
-			<span ng-if="current.fetching">Fetching..</span>
-		</button>
-		
-    </ion-content>
-    
-</ion-view>
+</div>

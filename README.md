@@ -22,7 +22,8 @@ What it gives you:
 	"version": "1.0.0",
 	"group": "tools",
 	"icon": "fa fa-phone",
-	"logo": "https://beta.bluip.io/assets/img/logo.svg",
+	"logo": "/api/applet/logo.svg",
+	"runtime": "/api/applet/app.js",
 	"routes": [{
 		"scrollable": true,
 		"stickable": true,
@@ -43,10 +44,10 @@ What it gives you:
 
 ## APPLET INSTALLATION
 
- * Download the repo and pick an applet to use as your base.
- * Change the "title" within the manifest.json. (The applet's title is unique and CANNOT be changed.)
- * Drag and drop your applet directory into [dev.redial.io](http://dev.redial.io) to register.
- * Ensure that your file paths are accessible (remote or local).
+1. Download the repo and pick an applet to use as your base.
+2. Change the "title" within the manifest.json. (The applet's title is unique and CANNOT be changed.)
+3. Drag and drop your applet directory into [dev.redial.io](http://dev.redial.io) to register.
+4. Ensure that your file paths are accessible (remote or local).
 
 ## MUST
 

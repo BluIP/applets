@@ -2,7 +2,7 @@
 // APPLET
 // ==========================================================================
 
-app.register.controller('appletController', function($rootScope, $scope, $compile, $timeout) {
+api.controller('appletController', function($rootScope, $scope, $compile, $timeout) {
 	
 	$scope.current = {
 		fetching: false
